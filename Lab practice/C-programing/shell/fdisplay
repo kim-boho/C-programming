@@ -1,0 +1,44 @@
+#! /bin/bash
+
+echo -n "Enter input file name: "
+read fileName
+test -f $fileName
+
+if (($? != 0))
+then echo -n "File '$fileName' does not exist."
+echo
+exit 0
+fi
+
+test -r $fileName
+if (($? != 0))
+then echo -n "File '$fileName' is not readable."
+echo
+exit 0
+fi
+
+echo -n "Enter option (e, p, f, l): "
+read char
+
+while test $char != e -a $char != E -a $char != p -a $char != P -a $char != f -a $char != F -a $char != l -a $char != L
+do
+echo -n "Invalid option"
+echo
+echo -n "Enter option (e, p, f, l): "
+read char
+done
+
+if test $char == e -o $char == E
+then
+cat $fileName
+elif test $char == p -o $char == P
+then
+more $fileName
+elif test $char == f -o $char == F
+then
+cat $fileName | head -10
+elif test $char == l -o $char == L
+then
+cat $fileName | tail -10
+fi
+

@@ -1,0 +1,43 @@
+#! /bin/bash
+echo -n "Enter input file name: "
+read fileName
+
+test -f $fileName
+if (($? != 0))
+then echo -n "File '$fileName' does not exist."
+echo
+exit 0
+fi
+
+test -r $fileName
+if (($? != 0))
+then echo -n "File '$fileName' is not readable."
+echo
+exit 0
+fi
+
+echo -n "Enter the word to search for: "
+read word
+echo -n "Case-sensitive (y/n)? "
+read answer
+
+while test $answer != y -a $answer != Y -a $answer != n -a $answer != N
+do
+echo -n "Invalid option"
+echo
+echo -n "Case-sensitive (y/n)? "
+read answer
+done
+
+if test $answer == y -o $answer == Y
+then
+egrep $word $fileName
+else
+egrep $word -i $fileName
+fi
+
+if test $? != 0
+then
+echo "Word '$word' not found"
+echo
+fi

@@ -1,0 +1,47 @@
+#! /bin/bash
+
+echo -n "Enter input file name: "
+read fileName
+
+test -f $fileName
+if (($? != 0))
+then echo -n "File '$fileName' does not exist."
+echo
+exit 0
+fi
+
+test -r $fileName
+if (($? != 0))
+then echo -n "File '$fileName' is not readable."
+echo
+exit 0
+fi
+
+echo -n "Count lines, words, chracters or all three (l, m, c, a)? "
+read char
+
+while test $char != l -a $char != L -a $char != m -a $char != M -a $char != c -a $char != C -a $char != a -a $char != A
+do
+echo -n "Invalid option"
+echo
+echo -n "Count lines, words, chracters or all three (l, m, c, a)? "
+read char
+done
+
+if test $char == l -o $char == L
+then
+echo -n "File '$fileName' contains `wc -l $fileName | cut -d " " -f 1` lines"
+echo
+elif test $char == m -o $char == M
+then
+echo -n "File '$fileName' contains `wc -w $fileName | cut -d " " -f 1` words"
+echo
+elif test $char == c -o $char == C
+then
+echo -n "File '$fileName' contains `wc -c $fileName | cut -d " " -f 1` characters"
+echo
+elif test $char == a -o $char == A
+then
+echo -n "File '$fileName' contains `wc -l $fileName | cut -d " " -f 1` lines, `wc -w $fileName | cut -d " " -f 1` words, `wc -c $fileName | cut -d " " -f 1` characters"
+echo
+fi

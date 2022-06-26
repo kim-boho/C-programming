@@ -1,0 +1,50 @@
+
+Breakpoint 1, main () at swap.c:11
+(gdb) display mainA
+1: mainA = 1
+(gdb) display mainB
+2: mainB = 20000
+
+
+
+Breakpoint 2, swap (x=1, y=20000) at swap.c:18
+(gdb) display x
+3: x = 1
+(gdb) display y
+4: y = 20000
+(gdb) display mainA
+No symbol "mainA" in current context.
+(gdb) display mainB
+No symbol "mainB" in current context.
+
+-> Since mainA and mainB is local variable of main function, they are not accessible in swap function.
+x and y just copied their value.
+
+
+
+Breakpoint 3, swap (x=20000, y=1) at swap.c:21
+4: y = 1
+3: x = 20000
+(gdb) display x
+5: x = 20000
+(gdb) display y
+6: y = 1
+
+-> x and y were swapped.
+
+
+
+Breakpoint 4, main () at swap.c:12
+2: mainB = 20000
+1: mainA = 1
+(gdb) display mainA
+7: mainA = 1
+(gdb) display mainB
+8: mainB = 20000
+(gdb) display x
+No symbol "x" in current context.
+(gdb) display y
+No symbol "y" in current context.
+
+-> mainA and mainB were not swapped.
+Since x and y are local variable of swap function, they vanished when swap function was ended.
